@@ -6,56 +6,32 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first": string;
-        /**
-          * The last name
-         */
-        "last": string;
-        /**
-          * The middle name
-         */
-        "middle": string;
+    interface WacdemoAmbulanceWlList {
     }
 }
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
+    interface HTMLWacdemoAmbulanceWlListElement extends Components.WacdemoAmbulanceWlList, HTMLStencilElement {
     }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
+    var HTMLWacdemoAmbulanceWlListElement: {
+        prototype: HTMLWacdemoAmbulanceWlListElement;
+        new (): HTMLWacdemoAmbulanceWlListElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
+        "wacdemo-ambulance-wl-list": HTMLWacdemoAmbulanceWlListElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first"?: string;
-        /**
-          * The last name
-         */
-        "last"?: string;
-        /**
-          * The middle name
-         */
-        "middle"?: string;
+    interface WacdemoAmbulanceWlList {
     }
     interface IntrinsicElements {
-        "my-component": MyComponent;
+        "wacdemo-ambulance-wl-list": WacdemoAmbulanceWlList;
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "wacdemo-ambulance-wl-list": LocalJSX.WacdemoAmbulanceWlList & JSXBase.HTMLAttributes<HTMLWacdemoAmbulanceWlListElement>;
         }
     }
 }
