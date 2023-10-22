@@ -4,6 +4,7 @@ RUN mkdir /build
 WORKDIR /build
 
 COPY package.json .
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 RUN npm install 
 
 COPY . .
