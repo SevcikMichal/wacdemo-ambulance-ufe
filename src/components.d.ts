@@ -6,10 +6,36 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface WacdemoAmbulanceWlApp {
+        "basePath": string;
+    }
+    interface WacdemoAmbulanceWlEditor {
+        "entryId": string;
+    }
     interface WacdemoAmbulanceWlList {
     }
 }
+export interface WacdemoAmbulanceWlEditorCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLWacdemoAmbulanceWlEditorElement;
+}
+export interface WacdemoAmbulanceWlListCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLWacdemoAmbulanceWlListElement;
+}
 declare global {
+    interface HTMLWacdemoAmbulanceWlAppElement extends Components.WacdemoAmbulanceWlApp, HTMLStencilElement {
+    }
+    var HTMLWacdemoAmbulanceWlAppElement: {
+        prototype: HTMLWacdemoAmbulanceWlAppElement;
+        new (): HTMLWacdemoAmbulanceWlAppElement;
+    };
+    interface HTMLWacdemoAmbulanceWlEditorElement extends Components.WacdemoAmbulanceWlEditor, HTMLStencilElement {
+    }
+    var HTMLWacdemoAmbulanceWlEditorElement: {
+        prototype: HTMLWacdemoAmbulanceWlEditorElement;
+        new (): HTMLWacdemoAmbulanceWlEditorElement;
+    };
     interface HTMLWacdemoAmbulanceWlListElement extends Components.WacdemoAmbulanceWlList, HTMLStencilElement {
     }
     var HTMLWacdemoAmbulanceWlListElement: {
@@ -17,13 +43,25 @@ declare global {
         new (): HTMLWacdemoAmbulanceWlListElement;
     };
     interface HTMLElementTagNameMap {
+        "wacdemo-ambulance-wl-app": HTMLWacdemoAmbulanceWlAppElement;
+        "wacdemo-ambulance-wl-editor": HTMLWacdemoAmbulanceWlEditorElement;
         "wacdemo-ambulance-wl-list": HTMLWacdemoAmbulanceWlListElement;
     }
 }
 declare namespace LocalJSX {
+    interface WacdemoAmbulanceWlApp {
+        "basePath"?: string;
+    }
+    interface WacdemoAmbulanceWlEditor {
+        "entryId"?: string;
+        "onEditor-closed"?: (event: WacdemoAmbulanceWlEditorCustomEvent<string>) => void;
+    }
     interface WacdemoAmbulanceWlList {
+        "onEntry-clicked"?: (event: WacdemoAmbulanceWlListCustomEvent<string>) => void;
     }
     interface IntrinsicElements {
+        "wacdemo-ambulance-wl-app": WacdemoAmbulanceWlApp;
+        "wacdemo-ambulance-wl-editor": WacdemoAmbulanceWlEditor;
         "wacdemo-ambulance-wl-list": WacdemoAmbulanceWlList;
     }
 }
@@ -31,6 +69,8 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "wacdemo-ambulance-wl-app": LocalJSX.WacdemoAmbulanceWlApp & JSXBase.HTMLAttributes<HTMLWacdemoAmbulanceWlAppElement>;
+            "wacdemo-ambulance-wl-editor": LocalJSX.WacdemoAmbulanceWlEditor & JSXBase.HTMLAttributes<HTMLWacdemoAmbulanceWlEditorElement>;
             "wacdemo-ambulance-wl-list": LocalJSX.WacdemoAmbulanceWlList & JSXBase.HTMLAttributes<HTMLWacdemoAmbulanceWlListElement>;
         }
     }
