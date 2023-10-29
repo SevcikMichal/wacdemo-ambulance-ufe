@@ -19,21 +19,36 @@
     "loader/"
   ],
   "scripts": {
-    "build": "stencil build --docs",
-    "start": "stencil build --dev --watch --serve",
+    "build:app": "stencil build --docs",
+    "build": "run-s openapi build:app",
+    "convert-openapi": "js-yaml  ./api/ambulance-wl.openapi.yaml > .openapi.json",
+    "mock-api": "open-api-mocker --schema .openapi.json --port 5005",
+    "start:app": "stencil build --dev --watch --serve",
+    "start:mock": "run-s convert-openapi mock-api",
+    "start": "run-p -r start:mock start:app",
+    "openapi": "openapi-generator-cli generate",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
+    "test:jest": "jest --config ./jest.config.js",
     "generate": "stencil generate"
   },
   "dependencies": {
     "@material/web": "^1.0.0",
-    "@stencil/core": "^4.0.0"
+    "@stencil/core": "^4.0.0",
+    "axios": "^1.6.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.23.2",
+    "@openapitools/openapi-generator-cli": "^2.7.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.11",
+    "axios-mock-adapter": "^1.22.0",
+    "babel-jest": "^29.7.0",
     "jest": "^27.5.1",
     "jest-cli": "^27.5.1",
+    "js-yaml": "^4.1.0",
+    "npm-run-all": "^4.1.5",
+    "open-api-mocker": "^2.0.0",
     "puppeteer": "21.1.1"
   },
   "license": "MIT"

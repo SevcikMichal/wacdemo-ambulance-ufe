@@ -11,9 +11,11 @@ declare global {
 })
 export class WacdemoAmbulanceWlApp {
 
-  @State() private relativePath = ""; 
-   
   @Prop() basePath: string = ""; 
+  @Prop() apiBase: string; 
+  @Prop() ambulanceId: string; 
+  
+  @State() private relativePath = ""; 
   
   componentWillLoad() { 
     console.log(this.basePath);
@@ -58,7 +60,7 @@ export class WacdemoAmbulanceWlApp {
         ? <wacdemo-ambulance-wl-editor entry-id={entryId}
             oneditor-closed={ () => navigate("./list")} >
           </wacdemo-ambulance-wl-editor>
-        : <wacdemo-ambulance-wl-list onentry-clicked={ (ev: CustomEvent<string>)=> navigate("./entry/" + ev.detail) } ></wacdemo-ambulance-wl-list>
+        : <wacdemo-ambulance-wl-list ambulance-id={this.ambulanceId} api-base={this.apiBase} onentry-clicked={ (ev: CustomEvent<string>)=> navigate("./entry/" + ev.detail) } ></wacdemo-ambulance-wl-list>
         }
         
       </Host>
