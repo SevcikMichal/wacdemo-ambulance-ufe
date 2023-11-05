@@ -55,10 +55,16 @@ export class WacdemoAmbulanceWlEditor {
             <md-icon slot="leading-icon">fingerprint</md-icon>
           </md-filled-text-field>
 
-          <md-filled-text-field label="Čakáte od" disabled 
-            value={this.entry?.waitingSince}> 
+          <md-filled-text-field 
+            label="Čakáte od" disabled 
+            value={new Date(this.entry?.waitingSince || Date.now()).toLocaleTimeString()}>
             <md-icon slot="leading-icon">watch_later</md-icon>
           </md-filled-text-field>
+          <md-filled-text-field  disabled
+            label="Predpokladaný čas vyšetrenia"
+            value={new Date(this.entry?.estimatedStart || Date.now()).toLocaleTimeString()}>
+              <md-icon slot="leading-icon">login</md-icon>
+          </md-filled-text-field >
 
           {this.renderConditions()} 
         </form> 
@@ -151,9 +157,10 @@ export class WacdemoAmbulanceWlEditor {
       this.entry = {  
         id: "@new",  
         patientId: "",  
-        waitingSince: null,  
-        estimatedDurationMinutes: 15  
+        waitingSince: new Date().toISOString(),  
+        estimatedDurationMinutes: 15,
       };  
+      this.entry.estimatedStart = (await this.assumedEntryDateAsync()).toISOString();
       return this.entry;  
     }  
     if ( !this.entryId ) {   
@@ -241,5 +248,24 @@ export class WacdemoAmbulanceWlEditor {
        }  
     }  
     return target.value  
+  }
+
+  private async assumedEntryDateAsync(): Promise<Date> {
+    try {
+      const response = await AmbulanceWaitingListApiFactory(undefined, this.apiBase)
+        .getWaitingListEntries(this.ambulanceId)
+      if (response.status > 299) {
+        return new Date();
+      }
+      const lastPatientOut = response.data
+        .map((_: WaitingListEntry) =>
+            Date.parse(_.estimatedStart)
+            + _.estimatedDurationMinutes * 60 * 1000
+        )
+        .reduce((acc: number, value: number) => Math.max(acc, value), 0);
+      return new Date(Math.max(Date.now(), lastPatientOut));
+    } catch (err: any) {
+      return new Date();
+    }
   }
 }
