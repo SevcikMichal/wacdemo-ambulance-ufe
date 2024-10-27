@@ -38,6 +38,8 @@ export class WacdemoAmbulanceWlApp {
   }
 
   render() {
+    console.debug("wacdemo-ambulance-wl-app.render() - path: %s", this.relativePath);
+
     let element = "list"
     let entryId = "@new"
   
