@@ -56,6 +56,7 @@ export class WacdemoAmbulanceWlApp {
       <Host>
         { element === "editor"
         ? <wacdemo-ambulance-wl-editor entry-id={entryId}
+            ambulance-id={this.ambulanceId} api-base={this.apiBase}
             oneditor-closed={ () => navigate("./list")} >
           </wacdemo-ambulance-wl-editor>
         : <wacdemo-ambulance-wl-list  ambulance-id={this.ambulanceId} api-base={this.apiBase}
